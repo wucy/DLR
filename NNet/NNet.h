@@ -1,0 +1,40 @@
+#pragma once
+
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/matrix_proxy.hpp>
+#include <boost/numeric/ublas/io.hpp>
+
+#include <vector>
+
+using namespace boost::numeric::ublas;
+
+class NNet
+{
+public:
+	NNet(char * fn);
+	vector< float > GetNLayerOutput(int n, vector < float > input);
+	int GetTotalLayer() { return transforms.size(); }
+	
+	enum LayerType
+	{
+		LINEAR,
+		SIGMOID,
+		SOFTMAX
+	};
+
+	struct Transform
+	{
+		matrix < double > W;
+		vector < float > b;
+		int tot_input, tot_output;
+		LayerType output_type;
+	};
+
+
+	std::vector< Transform > transforms;
+
+private:
+	void TNetReaderProxy(char * fn);
+};
+
