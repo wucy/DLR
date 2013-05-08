@@ -1,2 +1,2 @@
 NNet.o : NNet.cpp NNet.h
-	$(CC) -c NNet.cpp
+	$(CC) -c NNet.cpp $(FLAGS)

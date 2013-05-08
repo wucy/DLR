@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix_proxy.hpp>
@@ -13,7 +14,8 @@ class NNet
 {
 public:
 	NNet(char * fn);
-	vector< float > GetNLayerOutput(int n, vector < float > input);
+	vector< float > GetNLayerOutputFromM(int m, int n, const vector< float > & input);
+	vector< float > GetNLayerOutput(int n, const vector< float > & input);
 	int GetTotalLayer() { return transforms.size(); }
 	
 	enum LayerType
