@@ -17,3 +17,12 @@ TODO:
 OBJ:
 1. oDLR
 2. fDLR
+
+==2013.05.08==
+UPDATE:
+1. NNet (tested)
+TODO:
+1. oDLRTrainer
+OBJ:
+1. oDLR
+2. fDLR
