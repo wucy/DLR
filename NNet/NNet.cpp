@@ -40,8 +40,8 @@ void NNet::TNetReaderProxy(char * fn)
 		
 		//NEXT(matrix input) m, height, weight;
 		ifs >> tmp >> tot_out >> tot_in;
-		assert(tmp != "m" || tot_out != tf.tot_output || tot_in != tf.tot_input);
-		
+		//std::cerr << tmp << tot_out <<tot_in << tf.tot_output << tf.tot_input << std::endl;
+		assert(tmp == "m" && tot_out == tf.tot_output && tot_in == tf.tot_input);
 		matrix< float > W(tot_out, tot_in);
 		for (int i = 0; i < tot_out; ++ i)
 			for (int j = 0; j < tot_in; ++ j)
@@ -49,7 +49,8 @@ void NNet::TNetReaderProxy(char * fn)
 		
 		//NEXT(vect input) v, height;
 		ifs >> tmp >> tot_out;
-		assert(tmp != "v" || tot_out != tf.tot_output);
+		//std::cerr << tmp << tot_out << std::endl;
+		assert(tmp == "v" && tot_out == tf.tot_output);
 
 
 		vector< float > b(tot_out);
@@ -59,7 +60,7 @@ void NNet::TNetReaderProxy(char * fn)
 
 		//NEXT(output type) type, out, in;
 		ifs >> tmp >> tot_out >> tot_in;
-		assert(tot_out != tf.tot_output || tot_in != tf.tot_input);
+		assert(tot_out == tf.tot_output && tot_in == tf.tot_output);
 
 		if (tmp == "<sigmoid>") tf.output_type = SIGMOID;
 		else if (tmp == "<softmax>") tf.output_type = SOFTMAX;
@@ -76,19 +77,24 @@ void NNet::TNetReaderProxy(char * fn)
 	ifs.close();
 }
 
-vector< float > NNet::GetNLayerOutput(int n, vector< float > input)
+vector< float > NNet::GetNLayerOutput(int n, const vector< float > & input)
 {
-	assert(n >= this->transforms.size());
+	return GetNLayerOutputFromM(0, n, input);
+}
+
+vector< float > NNet::GetNLayerOutputFromM(int m, int n, const vector< float > & input)
+{
+	assert(n <= this->transforms.size() && m <= n && m >= 0 && input.size() == transforms[i].W.size2());
 
 	vector< float > now(input);
 
-	for (int i = 0; i < n; i ++)
+	for (int i = m; i < n; i ++)
 	{
-		now = prod(transforms[i].W, now);
-		now += transforms[i].b;
-		
-		if (transforms[i].output_type == SIGMOID) vector_sigmoid(now);
-		else if (transforms[i].output_type == SOFTMAX) vector_softmax(now);
+		now = prod(transforms[i].W, now) + transforms[i].b;
+		//std::cerr << (transforms[i].output_type == SOFTMAX) << std::endl;
+
+		if (transforms[i].output_type == SIGMOID) now = vector_sigmoid(now);
+		else if (transforms[i].output_type == SOFTMAX) now = vector_softmax(now);
 	}
 
 	return now;

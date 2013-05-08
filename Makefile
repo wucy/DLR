@@ -1,10 +1,12 @@
 export CC = g++
 
+export FLAGS = -DNDEBUG
+
 test : test.o NNet.o Util.o
-	$(CC) NNet/NNet.o Util/Util.o test.o -o test -O3 -g
+	$(CC) NNet/NNet.o Util/Util.o test.o -o test -O3
 
 test.o : test.cpp
-	$(CC) -c test.cpp
+	$(CC) -c test.cpp $(FLAGS)
 
 NNet.o :
 	$(MAKE) -C NNet --print-directory
