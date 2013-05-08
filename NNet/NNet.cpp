@@ -84,17 +84,13 @@ vector< float > NNet::GetNLayerOutput(int n, const vector< float > & input)
 
 vector< float > NNet::GetNLayerOutputFromM(int m, int n, const vector< float > & input)
 {
-	assert(n <= this->transforms.size() && m <= n && m >= 0 && input.size() == transforms[i].W.size2());
+	assert(n <= this->transforms.size() && m <= n && m >= 0 && input.size() == transforms[m].W.size2());
 
 	vector< float > now(input);
 
 	for (int i = m; i < n; i ++)
 	{
-		now = prod(transforms[i].W, now) + transforms[i].b;
-		//std::cerr << (transforms[i].output_type == SOFTMAX) << std::endl;
-
-		if (transforms[i].output_type == SIGMOID) now = vector_sigmoid(now);
-		else if (transforms[i].output_type == SOFTMAX) now = vector_softmax(now);
+		now = transforms[i].get_output(now);
 	}
 
 	return now;

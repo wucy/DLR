@@ -1,4 +1,4 @@
-#pragma once
+#include "Trainer.h"
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
@@ -11,6 +11,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <cassert>
 
 #include "../Util/Util.h"
 #include "../NNet/NNet.h"
@@ -25,31 +26,21 @@ using std::endl;
 using std::ifstream;
 
 
+void Trainer::InputProxy(char * fn)
+{
+	ifstream ifs(fn);
 
-class Trainer {
-	public: 
-	
-	Trainer(const NNet & n, char * ti_fn):nnet(n) 
-	{
-		InputProxy(ti_fn);
-	}
-
-
-	void InputProxy(char * fn);
-
-	struct TrainItem
+	int dim, tot;
+	ifs >> dim >> tot;
+	for (int i = 0; i < tot; ++ i)
 	{
 		int label;
-		vector< float > feature;
-		TrainItem(int ll, const vector< float > & fea):feature(fea)
-		{
-			label = ll;
-		}
-	};
+		vector< float > fea(dim);
+		ifs >> label;
+		for (int j = 0; j < dim; ++ j) ifs >> fea(j);
+		TrainItem ti(label, fea);
+		training_items.push_back(ti);
+	}
 
-	protected:
-	
-	std::vector< TrainItem > training_items;
-
-	NNet nnet;
-};
+	ifs.close();
+}

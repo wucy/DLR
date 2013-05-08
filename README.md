@@ -26,3 +26,12 @@ TODO:
 OBJ:
 1. oDLR
 2. fDLR
+
+==2013.05.09==
+UPDATE:
+1. oDLRTrainer
+TODO:
+2. test oDLRTrainer
+3. Extra/TFeaCat & corresponding scripts
+OBJ:
+1. fDLR

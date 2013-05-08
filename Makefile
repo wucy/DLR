@@ -1,12 +1,24 @@
 export CC = g++
 
-export FLAGS = -DNDEBUG
+export FLAGS = -Wall #-DNDEBUG
+
+BIN = oDLRTrain test
+
+oDLRTrain : oDLRTrain.o Trainer.o NNet.o Util.o
+	$(CC) oDLRTrain.o Trainer/oDLRTrainer.o NNet/NNet.o Util/Util.o -o oDLRTrain -O3
+
+oDLRTrain.o : oDLRTrain.cpp
+	$(CC) -c oDLRTrain.cpp $(FLAGS)
 
 test : test.o NNet.o Util.o
 	$(CC) NNet/NNet.o Util/Util.o test.o -o test -O3
 
 test.o : test.cpp
 	$(CC) -c test.cpp $(FLAGS)
+
+
+Trainer.o :
+	$(MAKE) -C Trainer --print-directory
 
 NNet.o :
 	$(MAKE) -C NNet --print-directory
@@ -19,7 +31,8 @@ Util.o :
 
 .PHONY : clean
 clean :
-	rm *.o */*.o test
+	rm *.o */*.o $(BIN)
 
 .PHONY : all
-all : test
+all : $(BIN)
+	rm *.o */*.o

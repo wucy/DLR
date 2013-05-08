@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix_proxy.hpp>
@@ -14,7 +15,7 @@
 
 #include "../Util/Util.h"
 #include "../NNet/NNet.h"
-
+#include "Trainer.h"
 
 using namespace boost::numeric::ublas;
 
@@ -26,30 +27,27 @@ using std::ifstream;
 
 
 
-class Trainer {
+class oDLRTrainer : public Trainer {
 	public: 
 	
-	Trainer(const NNet & n, char * ti_fn):nnet(n) 
+	oDLRTrainer(const NNet & n, char * ti_fn):Trainer(n,ti_fn)
 	{
-		InputProxy(ti_fn);
 	}
 
-
-	void InputProxy(char * fn);
-
-	struct TrainItem
-	{
-		int label;
-		vector< float > feature;
-		TrainItem(int ll, const vector< float > & fea):feature(fea)
-		{
-			label = ll;
-		}
-	};
-
-	protected:
 	
-	std::vector< TrainItem > training_items;
+	struct Result
+	{
+		vector< float > M;
+		vector< float > c;
+		vector< float > a;
+		int result_type;
+	};
+	Result SGD_only_c_Train(float eps, int round);
+	//void BGD_only_c_train(float eps, int round);
+	//void BGD_diagM_AND_c_Train(float eps, int round);
+	//void BGD_a_Train(float eps, int round);
 
-	NNet nnet;
+	private:
+
+	float TotalErr(const NNet::Transform & trans, int round);
 };
