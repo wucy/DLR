@@ -6,8 +6,11 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include <cmath>
+#include <vector>
+
 
 using namespace boost::numeric::ublas;
 
 extern vector< float > vector_sigmoid(const vector< float > & vect);
 extern vector< float > vector_softmax(const vector< float > & vect);
+extern std::vector< int > random_seq(int n);
