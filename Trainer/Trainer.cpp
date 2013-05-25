@@ -26,7 +26,6 @@ using std::endl;
 using std::ifstream;
 
 
-<<<<<<< HEAD
 void Trainer::InputProxy(char * fn_lab, char * fn_fea, int fea_dim, int sil_use_mode)
 {
 	ifstream ifs_fea(fn_fea);
@@ -52,23 +51,4 @@ void Trainer::InputProxy(char * fn_lab, char * fn_fea, int fea_dim, int sil_use_
 	ifs_fea.close();
 	ifs_lab.close();
 	cerr << "Finish reading features.[" << training_items.size() << "]" << endl;
-=======
-void Trainer::InputProxy(char * fn)
-{
-	ifstream ifs(fn);
-
-	int dim, tot;
-	ifs >> dim >> tot;
-	for (int i = 0; i < tot; ++ i)
-	{
-		int label;
-		vector< float > fea(dim);
-		ifs >> label;
-		for (int j = 0; j < dim; ++ j) ifs >> fea(j);
-		TrainItem ti(label, fea);
-		training_items.push_back(ti);
-	}
-
-	ifs.close();
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d
 }

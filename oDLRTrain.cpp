@@ -1,5 +1,4 @@
 #include "Trainer/oDLRTrainer.h"
-<<<<<<< HEAD
 #include "NNet/NNet.h"
 #include <iostream>
 #include <fstream>
@@ -40,12 +39,5 @@ int main(int argc, char * argv [])
 
 	trainer.SGD_only_c_Train(eps, round, out_dir);
 	//trainer.SGD_only_c_all_tied_Train(eps, round, out_dir);	
-=======
-using namespace std;
-
-
-int main()
-{
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d
 	return 0;
 }

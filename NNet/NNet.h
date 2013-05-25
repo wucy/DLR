@@ -7,13 +7,8 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include <vector>
-
-<<<<<<< HEAD
 #include <string>
 #include <sstream>
-
-=======
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d
 #include "../Util/Util.h"
 
 using namespace boost::numeric::ublas;
@@ -28,12 +23,7 @@ public:
 	NNet(char * fn);
 	vector< float > GetNLayerOutputFromM(int m, int n, const vector< float > & input);
 	vector< float > GetNLayerOutput(int n, const vector< float > & input);
-<<<<<<< HEAD
 	int GetTotalLayer() const { return transforms.size(); }
-=======
-	int GetTotalLayer() { return transforms.size(); }
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d
-	
 	enum LayerType
 	{
 		LINEAR,
@@ -59,7 +49,6 @@ public:
 			else if (output_type == SOFTMAX) now = vector_softmax(now);
 			return now;
 		}
-<<<<<<< HEAD
 		string toString() const
 		{
 			ostringstream oss;
@@ -75,7 +64,7 @@ public:
 			}
 			oss << "v " << b.size() << endl;
 			for (int i = 0; i < b.size(); ++ i)
-			{
+			{	
 				oss << b(i) << " ";
 			}
 			oss << "\n";
@@ -85,8 +74,6 @@ public:
 
 			return oss.str();
 		}
-=======
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d
 	};
 
 
@@ -95,4 +82,3 @@ public:
 private:
 	void TNetReaderProxy(char * fn);
 };
-

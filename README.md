@@ -35,7 +35,6 @@ TODO:
 3. Extra/TFeaCat & corresponding scripts
 OBJ:
 1. fDLR
-<<<<<<< HEAD
 
 ==2013.05.25==
 UPDATE:
@@ -44,6 +43,3 @@ UPDATE:
 TODO:
 1. advanced oDLR bias-tying strategy
 2. fDLR
-
-=======
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d

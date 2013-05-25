@@ -29,7 +29,6 @@ using std::ifstream;
 class Trainer {
 	public: 
 	
-<<<<<<< HEAD
 	Trainer(const NNet & n, char * fn_lab, char * fn_fea, int dim, int sil_use_mode = 0):nnet(n) 
 	{
 		InputProxy(fn_lab, fn_fea, dim, sil_use_mode);
@@ -37,15 +36,6 @@ class Trainer {
 
 
 	void InputProxy(char * fn_lab, char * fn_fea, int dim, int sil_use_mode);
-=======
-	Trainer(const NNet & n, char * ti_fn):nnet(n) 
-	{
-		InputProxy(ti_fn);
-	}
-
-
-	void InputProxy(char * fn);
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d
 
 	struct TrainItem
 	{
@@ -56,7 +46,6 @@ class Trainer {
 			label = ll;
 		}
 	};
-<<<<<<< HEAD
 	
 
 	struct CriteriaItem
@@ -79,12 +68,4 @@ class Trainer {
 	NNet nnet;
 
 
-=======
-
-	protected:
-	
-	std::vector< TrainItem > training_items;
-
-	NNet nnet;
->>>>>>> 40429d0bff00def6e25281793c213bde38f8ac2d
 };
