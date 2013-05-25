@@ -58,3 +58,19 @@ std::vector< int > random_seq(int n)
 	}
 	return ret;
 }
+
+
+std::vector< int > random_seq(int n)
+{
+	srand(time(NULL)^1357924680);
+	std::vector< int > ret;
+	for (int i = 0; i < n; ++ i) ret.push_back(i);
+	for (int step = 0; step < n * 5; ++ step)
+	{
+		int id1 = rand() % n, id2 = rand() % n;
+		int tmp = ret[id1];
+		ret[id1] = ret[id2];
+		ret[id2] = tmp;
+	}
+	return ret;
+}
