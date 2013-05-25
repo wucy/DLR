@@ -34,6 +34,7 @@ int main()
 #ifdef NDEBUG
 	//cerr << "NDEBUG is defined" << endl;
 #endif
+	//test_Util();
 	test_NNet_inst();
 	//test_NNet();
 	//test_Util();
@@ -48,8 +49,8 @@ void test_Util()
 	cerr << "RAW:\t" << vect << endl;
 	cerr << "SIGMOID:\t" << vector_sigmoid(vect) << endl;
 	cerr << "SOFTMAX:\t" << vector_softmax(vect) << endl;
-	std::vector< int > seq = random_seq(100);
-	for (int i = 0; i < 100; ++ i) cerr << seq[i] << "\t"; cerr << endl;
+	std::vector< int > seq = random_seq(10000);
+	//for (int i = 0; i < 100; ++ i) cerr << seq[i] << "\t"; cerr << endl;
 }
 
 void test_NNet()
@@ -69,15 +70,25 @@ void test_NNet()
 void test_NNet_inst()
 {
 	NNet nnet("/home/slhome/cyw56/workdir/slfs3/baseline_qyzj/dnn/backprop/tr_L0_L1_L2/weights/nnet_tr_L0_L1_L2_final_iters13_tr63.145_cv60.871");
-	ifstream ifs("testcase/fea.in");
+	ifstream ifs("testcase/fea2.in");
 	vector< float > v(429);
 	for (int i =0 ; i < 429; ++ i) ifs >> v(i);
 	ifs.close();
-	ofstream ofs("testcase/fea.pred");
-	vector< float > out=nnet.GetNLayerOutput(4, v);
-	for (int i = 0; i < out.size(); i ++)
+	ofstream ofs("testcase/fea2.pred");
+	vector< float > out_fea=nnet.GetNLayerOutput(3, v);
+	NNet::Transform last(nnet.transforms[3]);
+	zero_vector < float > c(out_fea.size());
+	last.b = prod(last.W, c) + last.b;
+	vector< float > out = last.get_output(out_fea);
+	int id = 0; float max = out(0);
+	for (int i = 1; i < out.size(); i ++)
 	{
-		ofs << out(i) << endl;
+		if (max < out(i))
+		{
+			max = out(i);
+			id = i;
+		}
 	}
+	ofs << id << endl;
 	ofs.close();
 }

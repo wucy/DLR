@@ -8,9 +8,16 @@
 
 #include <vector>
 
+#include <string>
+#include <sstream>
+
 #include "../Util/Util.h"
 
 using namespace boost::numeric::ublas;
+
+using std::string;
+using std::ostringstream;
+using std::endl;
 
 class NNet
 {
@@ -18,7 +25,7 @@ public:
 	NNet(char * fn);
 	vector< float > GetNLayerOutputFromM(int m, int n, const vector< float > & input);
 	vector< float > GetNLayerOutput(int n, const vector< float > & input);
-	int GetTotalLayer() { return transforms.size(); }
+	int GetTotalLayer() const { return transforms.size(); }
 	
 	enum LayerType
 	{
@@ -44,6 +51,31 @@ public:
 			if (output_type == SIGMOID) now = vector_sigmoid(now);
 			else if (output_type == SOFTMAX) now = vector_softmax(now);
 			return now;
+		}
+		string toString() const
+		{
+			ostringstream oss;
+			oss << "<biasedlinearity> " << W.size1() << " " << W.size2() << endl;
+			oss << "m "  << W.size1() << " " << W.size2() << endl;
+			for (int i = 0; i < W.size1(); ++ i)
+			{
+				for (int j = 0; j < W.size2(); ++ j)
+				{
+					oss << W(i, j) << " ";
+				}
+				oss << "\n";
+			}
+			oss << "v " << b.size() << endl;
+			for (int i = 0; i < b.size(); ++ i)
+			{
+				oss << b(i) << " ";
+			}
+			oss << "\n";
+			if (output_type == SIGMOID) oss << "<sigmoid> ";
+			else if (output_type == SOFTMAX) oss << "<softmax> ";
+			oss << b.size() << " " << b.size() << "\n";
+
+			return oss.str();
 		}
 	};
 

@@ -35,3 +35,12 @@ TODO:
 3. Extra/TFeaCat & corresponding scripts
 OBJ:
 1. fDLR
+
+==2013.05.25==
+UPDATE:
+1. oDLRTrainer with tied bias training
+2. a faster NN implementation
+TODO:
+1. advanced oDLR bias-tying strategy
+2. fDLR
+

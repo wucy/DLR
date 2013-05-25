@@ -30,8 +30,16 @@ vector< float > vector_softmax(const vector< float > & vect)
 {
 	vector< float > ret(vect.size());
 	float regulizer = 0;
-	for (int i = 0; i < vect.size(); ++ i) regulizer += exp(vect(i));
-	for (int i = 0; i < vect.size(); ++ i) ret(i) = exp(vect(i)) / regulizer;
+	float max = vect(0);
+	float min = vect(0);
+	for (int i = 1; i < vect.size(); ++ i) 
+	{
+		if (vect(i) > max) max = vect(i);
+		if (vect(i) < min) min = vect(i);
+	}
+	for (int i = 0; i < vect.size(); ++ i) regulizer += exp(vect(i)-max);
+	//std::cout << regulizer << "\t" << max << "\t" << min << std::endl;
+	for (int i = 0; i < vect.size(); ++ i) ret(i) = exp(vect(i)-max) / regulizer;
 	return ret;
 }
 

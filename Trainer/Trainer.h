@@ -29,13 +29,13 @@ using std::ifstream;
 class Trainer {
 	public: 
 	
-	Trainer(const NNet & n, char * ti_fn):nnet(n) 
+	Trainer(const NNet & n, char * fn_lab, char * fn_fea, int dim, int sil_use_mode = 0):nnet(n) 
 	{
-		InputProxy(ti_fn);
+		InputProxy(fn_lab, fn_fea, dim, sil_use_mode);
 	}
 
 
-	void InputProxy(char * fn);
+	void InputProxy(char * fn_lab, char * fn_fea, int dim, int sil_use_mode);
 
 	struct TrainItem
 	{
@@ -46,10 +46,26 @@ class Trainer {
 			label = ll;
 		}
 	};
+	
+
+	struct CriteriaItem
+	{
+		float obj;
+		float acc;
+		CriteriaItem(float a, float o)
+		{
+			acc = a;
+			obj = o;
+		}
+	};
 
 	protected:
+
+	//virtual ErrItem TotalErr(const NNet::Transform & trans) {}
 	
 	std::vector< TrainItem > training_items;
-
+	
 	NNet nnet;
+
+
 };

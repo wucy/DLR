@@ -1,11 +1,11 @@
 export CC = g++
 
-export FLAGS = -Wall #-DNDEBUG
+export FLAGS = -O3 -Wall -DNDEBUG
 
 BIN = oDLRTrain test
 
 oDLRTrain : oDLRTrain.o Trainer.o NNet.o Util.o
-	$(CC) oDLRTrain.o Trainer/oDLRTrainer.o NNet/NNet.o Util/Util.o -o oDLRTrain -O3
+	$(CC) oDLRTrain.o Trainer/Trainer.o Trainer/oDLRTrainer.o NNet/NNet.o Util/Util.o -o oDLRTrain -O3 -DNDEBUG
 
 oDLRTrain.o : oDLRTrain.cpp
 	$(CC) -c oDLRTrain.cpp $(FLAGS)
